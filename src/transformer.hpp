@@ -1,12 +1,9 @@
 // Transformer model
 
 #include "pch.hpp"
+#include "utilities.hpp"
 
 #pragma once
-
-#if defined(__linux__)
-typedef float float32_t;
-#endif
 
 class Config
 {
@@ -92,7 +89,14 @@ private:
     RunState state;             // buffers for the "wave" of activations in the forward pass
 
     // some more state needed to properly clean up the memory mapping (sigh)
-    int32_t fd;           // file descriptor for memory mapping
-    float32_t *data; // memory mapped data pointer
-    int64_t file_size;    // size of the checkpoint file in bytes
+    int32_t fd;        // file descriptor for memory mapping
+    float32_t *data;   // memory mapped data pointer
+    int64_t file_size; // size of the checkpoint file in bytes
 };
+
+void malloc_run_state(RunState* s, Config* p);
+void free_run_state(RunState* s);
+void read_checkpoint(int8_t* checkpoint, Config* config, TransformerWeights* weights,
+                     int32_t* fd, float32_t** data, int64_t* file_size);
+void build_transformer(Transformer *t, int8_t* checkpoint_path);
+void free_transformer(Transformer* t);

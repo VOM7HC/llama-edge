@@ -4,12 +4,14 @@ llama_edge_sources = [
   'posix.cpp',
   'transformer.cpp',
   'pch.cpp',
+  'utilities.cpp',
 ]
 
 llama_edge_headers = [
   'posix.hpp',
   'transformer.hpp',
   'pch.hpp',
+  'utilities.hpp',
 ]
 
 llama_edge_deps = [
